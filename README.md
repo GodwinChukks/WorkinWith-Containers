@@ -60,3 +60,70 @@
 
 ![images](screenshot/6.PNG)
 
+
+## Troubleshooting Container Exits After Run
+
+## What’s Happening Behind the Scenes
+
+### When you run a Docker container, it executes the command you specify (like /bin/bash, uname -a, etc.).
+
+### If that command finishes successfully or there's no ongoing process, the container exits—because its job is done!
+
+## How to Keep Containers Alive
+
+### If you want your container to stay running and usable, run it in interactive mode
+
+Command: `docker run -it --name myubuntu ubuntu /bin/bash`
+
+### `-it`: keeps it interactive and allocates a pseudo-TTY
+
+### `/bin/bash`: gives you a shell session inside the container
+
+### Your container will now stay alive as long as that shell session is open.
+
+
+## Now, run the container interactively so it stays alive:
+
+### Command: `docker run -dit --name nameyourcontainer nameofimageyouareusingtoruncontainer`
+
+`-d`: detached mode (runs in background)
+
+`-i`: interactive
+
+`-t`: allocates a TTY
+
+`--name`: names the container
+
+
+## To run a command (like showing system info), use:
+
+### Command: `docker exec ubuntutask uname -a`
+
+### This will show the system information while keeping the container alive.
+
+## Mapping Container
+
+### Mapping a container typically means connecting container ports to host machine ports, so you can access services (like a website or API) from outside the container. In Docker, this is done using the -p flag when running the container.
+
+## Basic Port Mapping Command
+
+`docker run -d -p <host_port>:<container_port> --name <container_name> <image_name>`
+
+## Example:
+
+### If you're running an NGINX container and want to access it on port 8080:
+
+`docker run -d -p 8080:80 --name nginx_container nginx`
+
+- 8080: port on your host (your computer or EC2 instance)
+
+- 80: port inside the container where NGINX listens
+
+- nginx: the Docker image you’re using
+
+## Accessing It:
+
+### Once mapped, you can visit: `http://localhost:8080` (if on your local machine) or `http://<your-public-ip>:8080` (if on a cloud server like AWS EC2)
+
+
+
